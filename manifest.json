@@ -14,8 +14,8 @@
 			"js":["sidebar.js"]
 		}
 	],
-
-  "permissions": [
-    "https://secure.flickr.com/"
-  ]
+	"permissions": ["contextMenus"],
+	"background": {
+		"scripts": ["background.js"]
+	}
 }
