@@ -1,0 +1,6 @@
+# Hidden files
+.*
+
+# Dependencies
+bower_components
+node_modules
