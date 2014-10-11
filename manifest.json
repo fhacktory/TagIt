@@ -3,8 +3,7 @@
 	"manifest_version": 2,
 	"name": "Tag it!",
 	"browser_action": {
-		"default_title": "Tag it!",
-		"default_popup": "popup.html"
+		"default_title": "Tag it!"
 	},
 
 	"content_scripts": [

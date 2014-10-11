@@ -4,8 +4,7 @@ function onClick(info, tab) {
   console.log("tab: " + JSON.stringify(tab));
 }
 
-console.log("initialise background");
+console.log("initialize background");
 
 chrome.contextMenus.removeAll();
 chrome.contextMenus.create({"title": "Tag it!", "onclick":onClick});
-
