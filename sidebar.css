@@ -1,0 +1,7 @@
+.sidebar {
+	background-color:red;
+	position: absolute;
+	width: 50px;
+	height: 100%;
+	right:1px;
+}
