@@ -1,4 +1,4 @@
-var sidebar = $("<div>TAG HERE</div>");
+var sidebar = $("<div>ALL YOUR BASE ARE BELONG TO US</div>");
 sidebar.addClass("tagit_sidebar");
 $("body").append(sidebar);
 
