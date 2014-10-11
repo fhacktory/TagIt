@@ -1,3 +1,5 @@
+$("html").addClass("tagit_padding");
+
 //var sidebar = $("<div>ALL YOUR BASE ARE BELONG TO US</div>");
 var sidebar = $("<div></div>");
 sidebar.addClass("tagit_sidebar");
@@ -41,4 +43,17 @@ chrome.runtime.sendMessage({
 	}
 }, function(response) {
 	console.log(response.state);
+});
+
+var toggleSidebar = function() {
+	$("html").toggleClass("tagit_padding");
+	$(".tagit_sidebar").toggle();	
+	$(".comment").hide();
+};
+
+chrome.runtime.onMessage.addListener(function(request,sender,sendResponse) {
+	if(request.hide_all) {
+		toggleSidebar();
+		sendResponse();
+	}
 });
