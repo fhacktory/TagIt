@@ -10,9 +10,7 @@
 	"description": "Tag the web, freedom of speech and tag for everyone! ;-)",
 	"license": "GPL",
 	"dependencies": {
-		"jquery": "~2.1.1",
-		"js-git": "~0.7.7",
-		"gen-run": "~0.1.2"
+		"jquery": "~2.1.1"
 	},
 	"ignore": [
 		"**/.*",

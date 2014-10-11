@@ -1,8 +1,17 @@
-var sidebar = document.createElement("div");
-sidebar.className += "tagit_sidebar";
-sidebar.appendChild(document.createTextNode("TEST"));
-document.body.appendChild(sidebar);
+var sidebar = $("<div>TAG HERE</div>");
+sidebar.addClass("tagit_sidebar");
+$("body").append(sidebar);
 
-var el = document.createTextNode("HAHAHAHAHA");
-var logo = document.getElementById("pagelet_bluebar");
-logo.appendChild(el);
+var comment = $("<div>Commentaire Test</div>");
+comment.addClass("comment");
+comment.offset({left: 50, top: 150});
+$("body").append(comment);
+
+// Stylises the injected HTML
+chrome.runtime.sendMessage({
+	css: {
+		file: "sidebar.css"
+	}
+}, function(response) {
+	console.log(response.state);
+});

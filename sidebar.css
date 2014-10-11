@@ -1,7 +1,18 @@
-.sidebar {
+body {
+	padding-right:50px;
+}
+
+.tagit_sidebar {
 	background-color:red;
 	position: absolute;
 	width: 50px;
 	height: 100%;
-	right:1px;
+	top:0;
+	right:0;
+	z-index:302;
+}
+
+.comment {
+	position:absolute;
+	border:1px solid black;
 }
