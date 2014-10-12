@@ -27,10 +27,13 @@ chrome.runtime.onMessage.addListener(function(request,sender,sendResponse) {
 			var val = $(ev.target).val();
 			console.log(val);
 			if(val.length > 0) {
+				var newTag = "<div class=\"tagit_comment\" style=\"top:" + request.p.y + "px; left:" + request.p.x + "px;\"><button class=\"close\">X</button><p>"+val+"</p></div>";
+
+				console.log(newTag);
+
 				chrome.runtime.sendMessage({
 					add_tag_to_database: true,
-					newTagText: val,
-					newTagCoord: request.p
+					newTag: newTag
 				}, function(response) {
 					if(response.ok) {
 						editor.remove();
@@ -89,10 +92,6 @@ function addStyle() {
 	});
 }
 
-function onCommentClose(ev) {
-	var comment = $(ev.target).parent();
-	comment.toggle();
-};
 function showComment(comment_el) {
 	$("body").append(comment_el);
 }
@@ -138,6 +137,11 @@ function sidebar() {
 	});
 }
 
-//overlay();
+function onTagClose(ev) {
+	var tag = $(ev.target).parent();
+	tag.toggle();
+};
+
+overlay();
 //showComments();
 addStyle();
