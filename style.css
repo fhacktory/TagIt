@@ -1,0 +1,27 @@
+.tagit_body {
+	min-height: 100%;
+	position: relative;
+}
+
+.tagit_background {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-color: rgba(0,0,0,0.5);
+	overflow: auto;
+}
+
+.tagit_tag {
+	width: 50%;
+	margin: auto;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	text-align: center;
+
+	color: white;
+	font-size: 10em;
+}

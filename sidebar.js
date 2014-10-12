@@ -1,3 +1,4 @@
+//$(document).ready(function(){//var sidebar = $("<div>ALL YOUR BASE ARE BELONG TO US</div>");
 $("html").addClass("tagit_padding");
 
 //var sidebar = $("<div>ALL YOUR BASE ARE BELONG TO US</div>");
@@ -47,7 +48,7 @@ chrome.runtime.sendMessage({
 
 var toggleSidebar = function() {
 	$("html").toggleClass("tagit_padding");
-	$(".tagit_sidebar").toggle();	
+	$(".tagit_sidebar").toggle();
 	$(".comment").hide();
 };
 
