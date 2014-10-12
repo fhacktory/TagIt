@@ -55,32 +55,20 @@ console.log("background get message:" + request);
       );
     });
   }
-  if(request.getComments) {
-    sendResponse({comments: comments});
-  }
   if(request.add_tag_to_database) {
-    var newTag = $("<div><button class=\"close\">X</button><p>"+request.newTagText+"</p></div>");
-    newTag.addClass("tagit_comment");
-    newTag.offset({left: request.newTagCoord.x, top: request.newTagCoord.y});
-    newTag.children(".close").click(onCommentClose);
-
-    console.log("add tag to database:" + newTag.outerHTML);
+    var newTag = request.newTag;
+    console.log("add tag to database:" + newTag);
     chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function(tabs) {
       var url = tabs[0].url;
       console.log(url);
       $.post(
         'http://tagitserver.herokuapp.com/tags',
-        { url:url, content: newTag.outerHTML},
+        { url:url, content: newTag},
         function(data) {
           console.log(data);
         }
       );
     });
-    sendResponse({ok: true, newTag: newTag.outerHTML});
+    sendResponse({ok: true, newTag: newTag});
   }
 });
-
-function onCommentClose(ev) {
-  var comment = $(ev.target).parent();
-  comment.toggle();
-};
