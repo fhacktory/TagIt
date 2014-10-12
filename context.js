@@ -173,7 +173,5 @@ function sidebar() {
 	});
 }
 
-$background.addClass('tagit_background');
-//$body.append($background);
 overlay();
 addStyle();
