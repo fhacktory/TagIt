@@ -3,48 +3,34 @@ console.log("initialize background");
 
 gPos = null;
 chrome.extension.onMessage.addListener(function(msg, sender, sendResponse) {
-	if (msg.from == 'contextmenu') {
-		//storing position
-		gPos = msg.point;
-	}
+  if (msg.from == 'contextmenu') {
+    //storing position
+    gPos = msg.point;
+  }
 });
 
 chrome.contextMenus.removeAll();
 chrome.contextMenus.create({id: '1',title: 'Tag it!'},function() {
-	console.log(chrome.runtime.lastError);
+  console.log(chrome.runtime.lastError);
 });
 
-comments = [
-  {
-    id: 0,
-    text: 'Un comm',
-    x: 50,
-    y: 150
-  },
-  {
-    id: 1,
-    text: 'Un autre comm',
-    x: 150,
-    y: 250
-  }
-];
-
 chrome.contextMenus.onClicked.addListener(function(info,tab) {
-	// coordinates are here!
-	var coords = gPos;
-	console.log(coords);
-	chrome.tabs.sendMessage(tab.id, {add_comment: true, p: gPos}, function(response) {
-		
-	});
+  // coordinates are here!
+  var coords = gPos;
+  console.log("Right click : " + coords);
+  chrome.tabs.sendMessage(tab.id, {create_new_tag: true, p: gPos}, function(response) {
+
+  });
 });
 
 chrome.browserAction.onClicked.addListener(function(tab) {
-	chrome.tabs.sendMessage(tab.id,{hide_all:true},function(response) {
+  chrome.tabs.sendMessage(tab.id,{hide_all:true},function(response) {
     console.log("response");
-	});
+  });
 });
 
 chrome.runtime.onMessage.addListener(function(request,sender,sendResponse) {
+console.log("background get message:" + request);
   if(request.css) {
     chrome.tabs.insertCSS(sender.tab.id,request.css);
     sendResponse({state:'css loaded'});
@@ -72,11 +58,29 @@ chrome.runtime.onMessage.addListener(function(request,sender,sendResponse) {
   if(request.getComments) {
     sendResponse({comments: comments});
   }
-	if(request.add_comment) {
-		var max_id = comments.length;
-		var comment = request.comment;
-		comment.id = max_id;
-		comments[max_id] = comment;
-		sendResponse({ok: true, comment: comment});
-	}
+  if(request.add_tag_to_database) {
+    var newTag = $("<div><button class=\"close\">X</button><p>"+request.newTagText+"</p></div>");
+    newTag.addClass("tagit_comment");
+    newTag.offset({left: request.newTagCoord.x, top: request.newTagCoord.y});
+    newTag.children(".close").click(onCommentClose);
+
+    console.log("add tag to database:" + newTag.outerHTML);
+    chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function(tabs) {
+      var url = tabs[0].url;
+      console.log(url);
+      $.post(
+        'http://tagitserver.herokuapp.com/tags',
+        { url:url, content: newTag.outerHTML},
+        function(data) {
+          console.log(data);
+        }
+      );
+    });
+    sendResponse({ok: true, newTag: newTag.outerHTML});
+  }
 });
+
+function onCommentClose(ev) {
+  var comment = $(ev.target).parent();
+  comment.toggle();
+};

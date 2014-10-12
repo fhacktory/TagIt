@@ -7,11 +7,12 @@ window.oncontextmenu = function(mousePos) {
 };
 
 chrome.runtime.onMessage.addListener(function(request,sender,sendResponse) {
+	console.log("context get message:" + request);
 	if(request.hide_all) {
 		//toggleSidebar();
 		sendResponse();
 	}
-	else if(request.add_comment) {
+	else if(request.create_new_tag) {
 		var editor = $('<div><input type="text"/></div>');
 		editor.addClass("tagit_editor");
 		editor.offset({left: request.p.x, top: request.p.y});
@@ -22,12 +23,14 @@ chrome.runtime.onMessage.addListener(function(request,sender,sendResponse) {
 			}
 		});
 		editor.children('input').blur(function(ev) {
+			console.log("new tag created:" + ev.target);
 			var val = $(ev.target).val();
+			console.log(val);
 			if(val.length > 0) {
-				var comment = {id: 3, text: val, x: request.p.x, y: request.p.y};
 				chrome.runtime.sendMessage({
-					add_comment: true,
-					comment: comment
+					add_tag_to_database: true,
+					newTagText: val,
+					newTagCoord: request.p
 				}, function(response) {
 					if(response.ok) {
 						editor.remove();
@@ -61,7 +64,7 @@ function overlay() {
 	$wraper.addClass('tagit_wraper');
 	$background.addClass('tagit_background');
 
-	console.log("send message");
+	console.log("get the tags from the background");
 	chrome.runtime.sendMessage(
 		{ getTags: true},
 		function(tags) {
@@ -90,14 +93,7 @@ function onCommentClose(ev) {
 	var comment = $(ev.target).parent();
 	comment.toggle();
 };
-function showComment(comment) {
-
-	var comment_id = "tagit_comment_"+comment.id;
-	var comment_el = $("<div><button class=\"close\">X</button><p>"+comment.text+"</p></div>");
-	comment_el.addClass("tagit_comment");
-	comment_el.attr("id",comment_id);
-	comment_el.offset({left: comment.x, top: comment.y});
-	comment_el.children(".close").click(onCommentClose);
+function showComment(comment_el) {
 	$("body").append(comment_el);
 }
 function showComments() {
@@ -143,5 +139,5 @@ function sidebar() {
 }
 
 //overlay();
-showComments();
+//showComments();
 addStyle();
