@@ -9,7 +9,7 @@
 	"content_scripts": [
 		{
 			"matches":["http://*/*","https://*/*"],
-			"js":["bower_components/jquery/dist/jquery.min.js","overlay.js","sidebar.js"]
+			"js":["bower_components/jquery/dist/jquery.min.js","context.js"]
 		}
 	],
 
