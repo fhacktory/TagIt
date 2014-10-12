@@ -1,8 +1,7 @@
 function toggleSidebar() {
 	console.log("toggle");
 	$("html").toggleClass("tagit_padding");
-	$(".tagit_sidebar").toggle();
-	$(".tagit_comment").hide();
+	$(".tagit_comment").toggle();
 	$(".tagit_background").toggle();
 }
 
