@@ -51,7 +51,6 @@ chrome.runtime.onMessage.addListener(function(request,sender,sendResponse) {
 		$("body").append(editor);
 		editor.children('input').focus();
 	} else if(request.tags) {
-		console.log("response");
 		for(var i in request.tags) {
 			$('.tagit_background').append($(request.tags[i]));
 		}

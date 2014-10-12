@@ -11,7 +11,6 @@ chrome.extension.onMessage.addListener(function(msg, sender, sendResponse) {
 
 chrome.contextMenus.removeAll();
 chrome.contextMenus.create({id: '1',title: 'Tag it!'},function() {
-  console.log(chrome.runtime.lastError);
 });
 
 chrome.contextMenus.onClicked.addListener(function(info,tab) {
