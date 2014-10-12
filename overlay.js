@@ -1,4 +1,3 @@
-$(document).ready(function() {
 	var $wraper = $('<div></div>');
 	var $background = $('<div></div>');
 	var $body = $(document.body);
@@ -30,4 +29,3 @@ $(document).ready(function() {
 
 	$background.addClass('tagit_background');
 	$body.append($background);
-});

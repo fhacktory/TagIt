@@ -9,12 +9,12 @@
 	"content_scripts": [
 		{
 			"matches":["http://*/*","https://*/*"],
-			"js":["bower_components/jquery/dist/jquery.min.js","overlay.js"]
+			"js":["bower_components/jquery/dist/jquery.min.js","overlay.js","sidebar.js"]
 		}
 	],
 
 	"background": {
-		"scripts": ["background.js","css_loader.js"],
+		"scripts": ["background.js","comments.js","css_loader.js"],
 		"persistent": false
 	},
 
