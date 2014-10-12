@@ -1,0 +1,14 @@
+http://imgur.com/er0q8Ky
+http://imgur.com/cPWnAjq
+
+
+<!-- Windows-phone -->
+http://www.windowsphone.com/FR-fr
+
+<style>.tagit_background {background-color: rgba(0,0,0,0);}</style>
+<img src="http://i.imgur.com/R63r9Fd.png" style="position: absolute;top: -2px;left: 263px;width: 621px;height: auto;">
+
+<!-- Fhacktory -->
+http://fhacktory.com/
+
+<img src="http://i.imgur.com/cPWnAjq.png" style=" width: 109%; bottom: 810px; position: absolute; z-index: 100000; left: -76px;" />

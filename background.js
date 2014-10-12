@@ -50,7 +50,7 @@ console.log("background get message:" + request);
             tags.push(obj.content);
           });
           console.log(tags);
-          sendResponse({tags: tags});
+          chrome.tabs.sendMessage(tabs[0].id, {tags: tags});
         }
       );
     });

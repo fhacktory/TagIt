@@ -1,3 +1,10 @@
+function toggleSidebar() {
+	console.log("toggle");
+	$("html").toggleClass("tagit_padding");
+	$(".tagit_sidebar").toggle();
+	$(".tagit_comment").hide();
+	$(".tagit_background").toggle();
+}
 
 window.oncontextmenu = function(mousePos) {
 	console.log('contextmenu!');
@@ -9,7 +16,7 @@ window.oncontextmenu = function(mousePos) {
 chrome.runtime.onMessage.addListener(function(request,sender,sendResponse) {
 	console.log("context get message:" + request);
 	if(request.hide_all) {
-		//toggleSidebar();
+		toggleSidebar();
 		sendResponse();
 	}
 	else if(request.create_new_tag) {
@@ -41,6 +48,11 @@ chrome.runtime.onMessage.addListener(function(request,sender,sendResponse) {
 		});
 		$("body").append(editor);
 		editor.children('input').focus();
+	} else if(request.tags) {
+		console.log("response");
+		for(var i in request.tags) {
+			$('.tagit_background').append($(request.tags[i]));
+		}
 	}
 });
 
@@ -65,14 +77,7 @@ function overlay() {
 	$background.addClass('tagit_background');
 
 	console.log("get the tags from the background");
-	chrome.runtime.sendMessage(
-		{ getTags: true},
-		function(tags) {
-			console.log("response" + tags);
-			for(var i in tags) {
-				$background.append($(tags[i]));
-			}
-		});
+	chrome.runtime.sendMessage({getTags: true});
 
 	$body.prepend($background);
 	$body.wrapInner($wraper);
@@ -120,14 +125,6 @@ function sidebar() {
 		comment.toggle();
 	};
 
-	function toggleSidebar() {
-		console.log("toggle");
-		$("html").toggleClass("tagit_padding");
-		$(".tagit_sidebar").toggle();
-		$(".tagit_comment").hide();
-		$(".tagit_background").toggle();
-	};
-
 	chrome.runtime.onMessage.addListener(function(request,sender,sendResponse) {
 		console.log("message");
 		if(request.hide_all) {
@@ -138,6 +135,6 @@ function sidebar() {
 	});
 }
 
-//overlay();
+overlay();
 //showComments();
 addStyle();
