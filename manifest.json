@@ -14,7 +14,7 @@
 	],
 
 	"background": {
-		"scripts": ["background.js","comments.js","css_loader.js"],
+		"scripts": ["background.js"],
 		"persistent": false
 	},
 

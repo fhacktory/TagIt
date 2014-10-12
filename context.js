@@ -1,11 +1,19 @@
+
+window.oncontextmenu = function(mousePos) {
+	console.log('contextmenu!');
+	var p = {clientX: mousePos.clientX, clientY: mousePos.clientY};
+	var msg = {point: p, from: 'contextmenu'};
+	chrome.runtime.sendMessage(msg, function(response) {});
+};
+
+/*
 //$(document).ready(function(){//var sidebar = $("<div>ALL YOUR BASE ARE BELONG TO US</div>");
 $("html").addClass("tagit_padding");
-
 //var sidebar = $("<div>ALL YOUR BASE ARE BELONG TO US</div>");
 var sidebar = $("<div></div>");
 sidebar.addClass("tagit_sidebar");
 $("body").append(sidebar);
-
+*/
 var onCommentThumbnailClick = function(ev) {
 	var comment = $("#"+ev.data.comment_id);
 	comment.toggle();
@@ -27,39 +35,28 @@ chrome.runtime.sendMessage({
 		comment_el.hide();
 		comment_el.children(".close").click(onCommentClose);
 		$("body").append(comment_el);
-
+/*
 		var thumbnail = $("<div>A</div>");
 		thumbnail.addClass("comment_thumbnail");
 		thumbnail.attr("data-comment-id",comment_id);
 		thumbnail.offset({top: comment.y});
 		thumbnail.click({comment_id: comment_id}, onCommentThumbnailClick);
 		sidebar.append(thumbnail);
+*/
 	});
 });
-
-// Stylises the injected HTML
-chrome.runtime.sendMessage({
-	css: {
-		file: "sidebar.css",
-	}
-}, function(response) {
-	console.log(response.state);
-});
-
+/*
 var toggleSidebar = function() {
 	console.log("toggle");
 	$("html").toggleClass("tagit_padding");
 	$(".tagit_sidebar").toggle();
 	$(".comment").hide();
 	$(".tagit_background").toggle();
-};
+};*/
 
-console.log("sidebar.js");
 chrome.runtime.onMessage.addListener(function(request,sender,sendResponse) {
-	console.log("message");
 	if(request.hide_all) {
-		console.log("hide all");
-		toggleSidebar();
+		//toggleSidebar();
 		sendResponse();
 	}
 });
@@ -83,7 +80,7 @@ for (var i in $comments) {
 // Stylises the injected HTML
 chrome.runtime.sendMessage({
 	css: {
-		file: "overlay.css"
+		file: "style.css"
 	}
 }, function(response) {
 	console.log(response.state);
@@ -95,4 +92,4 @@ $wraper.addClass('tagit_wraper');
 $body.wrapInner($wraper);
 
 $background.addClass('tagit_background');
-$body.append($background);
+//$body.append($background);

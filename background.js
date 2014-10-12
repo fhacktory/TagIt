@@ -1,13 +1,23 @@
-function onClick(info, tab) {
-  console.log("item " + info.menuItemId + " was clicked");
-  console.log("info: " + JSON.stringify(info));
-  console.log("tab: " + JSON.stringify(tab));
-}
 
 console.log("initialize background");
 
+gPos = null;
+chrome.extension.onMessage.addListener(function(msg, sender, sendResponse) {
+	if (msg.from == 'contextmenu') {
+		//storing position
+		gPos = msg.point;
+	}
+});
+
 chrome.contextMenus.removeAll();
-chrome.contextMenus.create({"title": "Tag it!", "onclick":onClick});
+chrome.contextMenus.create({id: '1',title: 'Tag it!'},function() {
+	console.log(chrome.runtime.lastError);	
+});
+
+chrome.contextMenus.onClicked.addListener(function(info,tab) {
+	// coordinates are here!
+	var coords = gPos;
+});
 
 
 var comments = [
