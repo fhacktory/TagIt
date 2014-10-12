@@ -8,3 +8,8 @@ console.log("initialize background");
 
 chrome.contextMenus.removeAll();
 chrome.contextMenus.create({"title": "Tag it!", "onclick":onClick});
+
+chrome.browserAction.onClicked.addListener(function(tab) {
+	chrome.tabs.sendMessage(tab.id,{hide_all:true},function(response) {
+	});
+});

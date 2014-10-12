@@ -1,11 +1,14 @@
 html {
 	min-height: 100%;
 	position:relative;
-	padding-right:50px !important;
 }
 
 body {
 	height:100%;
+}
+
+.tagit_padding {
+	padding-right: 50px;
 }
 
 .tagit_sidebar {
