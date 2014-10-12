@@ -53,13 +53,6 @@ function overlay() {
 	});
 	*/
 
-	var $comments = [
-		$('<p class="tagit_tag" data-x="10px" data-y="1px">Have an octotastic day ;-)</p>'),
-		$('<p class="tagit_tag" data-x="1px" data-y="10px">All your base are belong to us</p>'),
-		$('<p class="tagit_tag" data-x="1px" data-y="20px">Up up down down left right left right b a start</p>'),
-		$('<p class="tagit_tag" data-x="20px" data-y="1px">You just lost thug aim</p>')
-	];
-
 	$background.on('click', function() {
 		$background.toggleClass('tagit_wall');
 	});
@@ -68,9 +61,15 @@ function overlay() {
 	$wraper.addClass('tagit_wraper');
 	$background.addClass('tagit_background');
 
-	for (var i in $comments) {
-		$background.append($comments[i]);
-	}
+	console.log("send message");
+	chrome.runtime.sendMessage(
+		{ getTags: true},
+		function(tags) {
+			console.log("response" + tags);
+			for(var i in tags) {
+				$background.append($(tags[i]));
+			}
+		});
 
 	$body.prepend($background);
 	$body.wrapInner($wraper);

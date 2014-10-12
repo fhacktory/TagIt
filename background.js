@@ -11,7 +11,7 @@ chrome.extension.onMessage.addListener(function(msg, sender, sendResponse) {
 
 chrome.contextMenus.removeAll();
 chrome.contextMenus.create({id: '1',title: 'Tag it!'},function() {
-	console.log(chrome.runtime.lastError);	
+	console.log(chrome.runtime.lastError);
 });
 
 comments = [
@@ -48,6 +48,26 @@ chrome.runtime.onMessage.addListener(function(request,sender,sendResponse) {
   if(request.css) {
     chrome.tabs.insertCSS(sender.tab.id,request.css);
     sendResponse({state:'css loaded'});
+  }
+  if(request.getTags) {
+    console.log("get tags");
+    chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function(tabs) {
+      var url = tabs[0].url;
+      console.log(url);
+      $.post(
+        'http://tagitserver.herokuapp.com/list_tags_by_url',
+        { url:url},
+        function(data) {
+          console.log(data);
+          var tags = [];
+          data.forEach(function(obj) {
+            tags.push(obj.content);
+          });
+          console.log(tags);
+          sendResponse({tags: tags});
+        }
+      );
+    });
   }
   if(request.getComments) {
     sendResponse({comments: comments});
