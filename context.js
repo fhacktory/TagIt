@@ -1,63 +1,43 @@
 
 window.oncontextmenu = function(mousePos) {
 	console.log('contextmenu!');
-	var p = {clientX: mousePos.clientX, clientY: mousePos.clientY};
+	var p = {x: mousePos.clientX, y: mousePos.clientY};
 	var msg = {point: p, from: 'contextmenu'};
 	chrome.runtime.sendMessage(msg, function(response) {});
 };
-
-/*
-//$(document).ready(function(){//var sidebar = $("<div>ALL YOUR BASE ARE BELONG TO US</div>");
-$("html").addClass("tagit_padding");
-//var sidebar = $("<div>ALL YOUR BASE ARE BELONG TO US</div>");
-var sidebar = $("<div></div>");
-sidebar.addClass("tagit_sidebar");
-$("body").append(sidebar);
-*/
-var onCommentThumbnailClick = function(ev) {
-	var comment = $("#"+ev.data.comment_id);
-	comment.toggle();
-};
-var onCommentClose = function(ev) {
-	var comment = $(ev.target).parent();
-	comment.toggle();
-}
-
-chrome.runtime.sendMessage({
-	getComments: true
-}, function(response) {
-	$.each(response.comments, function(index,comment) {
-		var comment_id = "tagit_comment_"+comment.id;
-		var comment_el = $("<div><button class=\"close\">X</button><p>"+comment.text+"</p></div>");
-		comment_el.addClass("comment");
-		comment_el.attr("id",comment_id);
-		comment_el.offset({left: comment.x, top: comment.y});
-		comment_el.hide();
-		comment_el.children(".close").click(onCommentClose);
-		$("body").append(comment_el);
-/*
-		var thumbnail = $("<div>A</div>");
-		thumbnail.addClass("comment_thumbnail");
-		thumbnail.attr("data-comment-id",comment_id);
-		thumbnail.offset({top: comment.y});
-		thumbnail.click({comment_id: comment_id}, onCommentThumbnailClick);
-		sidebar.append(thumbnail);
-*/
-	});
-});
-/*
-var toggleSidebar = function() {
-	console.log("toggle");
-	$("html").toggleClass("tagit_padding");
-	$(".tagit_sidebar").toggle();
-	$(".comment").hide();
-	$(".tagit_background").toggle();
-};*/
 
 chrome.runtime.onMessage.addListener(function(request,sender,sendResponse) {
 	if(request.hide_all) {
 		//toggleSidebar();
 		sendResponse();
+	}
+	else if(request.add_comment) {
+		var editor = $('<div><input type="text"/></div>');
+		editor.addClass("tagit_editor");
+		editor.offset({left: request.p.x, top: request.p.y});
+		editor.children('input').keypress(function(ev) {
+			if(ev.which == 13) {
+				ev.preventDefault();
+				$(ev.target).blur();
+			}
+		});
+		editor.children('input').blur(function(ev) {
+			var val = $(ev.target).val();
+			if(val.length > 0) {
+				var comment = {id: 3, text: val, x: request.p.x, y: request.p.y};
+				chrome.runtime.sendMessage({
+					add_comment: true,
+					comment: comment
+				}, function(response) {
+					if(response.ok) {
+						editor.remove();
+						showComment(response.comment);
+					}
+				});
+			}
+		});
+		$("body").append(editor);
+		editor.children('input').focus();
 	}
 });
 
@@ -94,15 +74,6 @@ function overlay() {
 
 	$body.prepend($background);
 	$body.wrapInner($wraper);
-
-	// Stylises the injected HTML
-	chrome.runtime.sendMessage({
-		css: {
-			file: "style.css",
-		}
-	}, function(response) {
-		console.log(response.state);
-	});
 }
 
 function addStyle() {
@@ -113,6 +84,31 @@ function addStyle() {
 		}
 	}, function(response) {
 		console.log(response.state);
+	});
+}
+
+function onCommentClose(ev) {
+	var comment = $(ev.target).parent();
+	comment.toggle();
+};
+function showComment(comment) {
+
+	var comment_id = "tagit_comment_"+comment.id;
+	var comment_el = $("<div><button class=\"close\">X</button><p>"+comment.text+"</p></div>");
+	comment_el.addClass("tagit_comment");
+	comment_el.attr("id",comment_id);
+	comment_el.offset({left: comment.x, top: comment.y});
+	comment_el.children(".close").click(onCommentClose);
+	$("body").append(comment_el);
+}
+function showComments() {
+
+	chrome.runtime.sendMessage({
+		getComments: true
+	}, function(response) {
+		$.each(response.comments, function(index,comment) {
+			showComment(comment);
+		});
 	});
 }
 
@@ -128,32 +124,6 @@ function sidebar() {
 		var comment = $("#"+ev.data.comment_id);
 		comment.toggle();
 	};
-	var onCommentClose = function(ev) {
-		var comment = $(ev.target).parent();
-		comment.toggle();
-	}
-
-	chrome.runtime.sendMessage({
-		getComments: true
-	}, function(response) {
-		$.each(response.comments, function(index,comment) {
-			var comment_id = "tagit_comment_"+comment.id;
-			var comment_el = $("<div><button class=\"close\">X</button><p>"+comment.text+"</p></div>");
-			comment_el.addClass("tagit_comment");
-			comment_el.attr("id",comment_id);
-			comment_el.offset({left: comment.x, top: comment.y});
-			comment_el.hide();
-			comment_el.children(".close").click(onCommentClose);
-			$("body").append(comment_el);
-
-			var thumbnail = $("<div>A</div>");
-			thumbnail.addClass("tagit_comment_thumbnail");
-			thumbnail.attr("data-comment-id",comment_id);
-			thumbnail.offset({top: comment.y});
-			thumbnail.click({comment_id: comment_id}, onCommentThumbnailClick);
-			sidebar.append(thumbnail);
-		});
-	});
 
 	function toggleSidebar() {
 		console.log("toggle");
@@ -173,7 +143,6 @@ function sidebar() {
 	});
 }
 
-$background.addClass('tagit_background');
-//$body.append($background);
-overlay();
+//overlay();
+showComments();
 addStyle();

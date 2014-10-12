@@ -34,6 +34,10 @@ body {
 	border:1px solid black;
 }
 
+.tagit_editor {
+	position: absolute;
+}
+
 /* Overlay */
 
 .tagit_body {
@@ -60,38 +64,4 @@ body {
 .tagit_tag {
 	color: white;
 	font-size: 2em;
-}
-
-html {
-	min-height: 100%;
-	position:relative;
-}
-
-body {
-	height:100%;
-}
-
-.tagit_padding {
-	padding-right: 50px;
-}
-
-.tagit_sidebar {
-	background-color:red;
-	position: absolute;
-	width: 50px;
-	top:0;
-	bottom:0;
-	right:0;
-	z-index:302;
-}
-
-.comment {
-	background-color:white;
-	position:absolute;
-	border:1px solid black;
-}
-
-.comment_thumbnail {
-	position:relative;
-	border:1px solid black;
 }
