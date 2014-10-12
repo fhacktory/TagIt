@@ -27,7 +27,7 @@ chrome.runtime.onMessage.addListener(function(request,sender,sendResponse) {
 			var val = $(ev.target).val();
 			console.log(val);
 			if(val.length > 0) {
-				var newTag = "<div class=\"tagit_comment\" style=\"top:" + request.p.y + "px; left:" + request.p.x + "px;\"><button class=\"close\">X</button><p>"+val+"</p></div>";
+				var newTag = "<div class=\"tagit_comment\" style=\"top:" + request.p.y + "px; left:" + request.p.x + "px;\">"+val+"</div>";
 
 				console.log(newTag);
 
