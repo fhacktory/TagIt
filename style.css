@@ -1,11 +1,53 @@
+/* Sidebar */
+
+html {
+	min-height: 100%;
+	position:relative;
+}
+
+body {
+	height:100%;
+}
+
+.tagit_padding {
+	padding-right: 50px;
+}
+
+.tagit_sidebar {
+	background-color:red;
+	position: absolute;
+	width: 50px;
+	top:0;
+	bottom:0;
+	right:0;
+	z-index:302;
+}
+
+.tagit_comment {
+	background-color:white;
+	position:absolute;
+	border:1px solid black;
+}
+
+.tagit_comment_thumbnail {
+	position:relative;
+	border:1px solid black;
+}
+
+/* Overlay */
+
 .tagit_body {
 	margin: 0;
 	min-height: 100%;
 	position: relative;
 }
 
-.tagit_background {
+.tagit_wall {
 	position: absolute;
+}
+
+.tagit_background {
+/*	position: absolute; */
 	top: 0;
 	right: 0;
 	bottom: 0;
@@ -16,16 +58,8 @@
 }
 
 .tagit_tag {
-	width: 50%;
-	margin: auto;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	text-align: center;
-
 	color: white;
-	font-size: 10em;
+	font-size: 2em;
 }
 
 html {
