@@ -21,13 +21,13 @@ body {
 	z-index:302;
 }
 
-.comment {
+.tagit_comment {
 	background-color:white;
 	position:absolute;
 	border:1px solid black;
 }
 
-.comment_thumbnail {
+.tagit_comment_thumbnail {
 	position:relative;
 	border:1px solid black;
 }

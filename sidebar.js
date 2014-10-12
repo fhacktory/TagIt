@@ -21,7 +21,7 @@ chrome.runtime.sendMessage({
 	$.each(response.comments, function(index,comment) {
 		var comment_id = "tagit_comment_"+comment.id;
 		var comment_el = $("<div><button class=\"close\">X</button><p>"+comment.text+"</p></div>");
-		comment_el.addClass("comment");
+		comment_el.addClass("tagit_comment");
 		comment_el.attr("id",comment_id);
 		comment_el.offset({left: comment.x, top: comment.y});
 		comment_el.hide();
@@ -29,7 +29,7 @@ chrome.runtime.sendMessage({
 		$("body").append(comment_el);
 
 		var thumbnail = $("<div>A</div>");
-		thumbnail.addClass("comment_thumbnail");
+		thumbnail.addClass("tagit_comment_thumbnail");
 		thumbnail.attr("data-comment-id",comment_id);
 		thumbnail.offset({top: comment.y});
 		thumbnail.click({comment_id: comment_id}, onCommentThumbnailClick);
