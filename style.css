@@ -24,7 +24,10 @@ body {
 }
 
 .tagit_comment {
+	font-family: "Slammer tag";
 	background-color:white;
+	font-size:2em;
+	color:red;
 	position:absolute;
 	border:1px solid black;
 }
