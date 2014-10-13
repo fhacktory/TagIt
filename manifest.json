@@ -3,7 +3,7 @@
 	"manifest_version": 2,
 	"name": "Tag it!",
 	"browser_action": {
-    "default_icon": "icon19.png",
+    "default_icon": "images/icon19.png",
 		"default_title": "Tag it!"
 	},
 
