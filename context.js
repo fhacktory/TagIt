@@ -1,6 +1,5 @@
 function toggleSidebar() {
 	console.log("toggle");
-	$("html").toggleClass("tagit_padding");
 	$(".tagit_comment").toggle();
 	$(".tagit_background").toggle();
 }
@@ -51,6 +50,7 @@ chrome.runtime.onMessage.addListener(function(request,sender,sendResponse) {
 		$("body").append(editor);
 		editor.children('input').focus();
 	} else if(request.tags) {
+		console.log("response");
 		for(var i in request.tags) {
 			$('.tagit_background').append($(request.tags[i]));
 		}
@@ -69,19 +69,17 @@ function overlay() {
 	});
 	*/
 
-	$background.on('click', function() {
-		$background.toggleClass('tagit_wall');
-	});
-
 	$body.addClass('tagit_body');
 	$wraper.addClass('tagit_wraper');
 	$background.addClass('tagit_background');
+	$background.addClass('tagit_wall');
 
 	console.log("get the tags from the background");
 	chrome.runtime.sendMessage({getTags: true});
 
 	$body.prepend($background);
 	$body.wrapInner($wraper);
+	setTimeout(toggleSidebar, 350);
 }
 
 function addStyle() {
@@ -106,29 +104,6 @@ function showComments() {
 		$.each(response.comments, function(index,comment) {
 			showComment(comment);
 		});
-	});
-}
-
-function sidebar() {
-
-	$("html").addClass("tagit_padding");
-
-	var sidebar = $("<div></div>");
-	sidebar.addClass("tagit_sidebar");
-	$("body").append(sidebar);
-
-	var onCommentThumbnailClick = function(ev) {
-		var comment = $("#"+ev.data.comment_id);
-		comment.toggle();
-	};
-
-	chrome.runtime.onMessage.addListener(function(request,sender,sendResponse) {
-		console.log("message");
-		if(request.hide_all) {
-			console.log("hide all");
-			toggleSidebar();
-			sendResponse();
-		}
 	});
 }
 
