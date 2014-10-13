@@ -9,10 +9,6 @@ body {
 	height:100%;
 }
 
-.tagit_padding {
-	padding-right: 50px;
-}
-
 .tagit_sidebar {
 	background-color:red;
 	position: absolute;
