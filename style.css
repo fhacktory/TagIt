@@ -19,8 +19,45 @@ body {
 	z-index:302;
 }
 
+/*
+ * Web Fonts from fontspring.com
+ *
+ * All OpenType features and all extended glyphs have been removed.
+ * Fully installable fonts can be purchased at http://www.fontspring.com
+ *
+ * The fonts included in this stylesheet are subject to the End User License you purchased
+ * from Fontspring. The fonts are protected under domestic and international trademark and
+ * copyright law. You are prohibited from modifying, reverse engineering, duplicating, or
+ * distributing this font software.
+ *
+ * (c) 2010-2014 Fontspring
+ *
+ *
+ *
+ *
+ * The fonts included are copyrighted by the vendor listed below.
+ *
+ * Vendor:      Albatross
+ * License URL: http://www.fontspring.com/licenses/albatross/webfont
+ *
+ *
+ */
+
+@font-face {
+    font-family: 'bloxregular';
+    src: url('Blox-webfont.eot');
+    src: url('Blox-webfont.eot?#iefix') format('embedded-opentype'),
+         url('Blox-webfont.woff2') format('woff2'),
+         url('Blox-webfont.woff') format('woff'),
+         url('Blox-webfont.ttf') format('truetype'),
+         url('Blox-webfont.svg#bloxregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 .tagit_comment {
-	font-family: "Slammer tag";
+	font-family: "bloxregular";
 	background-color:white;
 	font-size:2em;
 	color:red;
